@@ -83,16 +83,21 @@ def smart_find_op_id(op_text, db_maps):
     if root in map_str: return map_str[root]
     return None
 
-def run_incremental_sync():
+def run_incremental_sync(hours_back=3):
+    # Calculamos el timestamp para la sincronización incremental
+    # Usamos una ventana de 'hours_back' para asegurar que capturamos cambios recientes inclusive si hubo un fallo corto
+    last_sync_utc = (datetime.utcnow() - timedelta(hours=hours_back)).strftime('%Y-%m-%dT%H:%M:%SZ')
+    
     print(f"\n🚀 [INCREMENTAL SYNC] Iniciando... {datetime.now().strftime('%H:%M:%S')}")
+    print(f"  -> Buscando cambios desde: {last_sync_utc}")
     token = get_token()
     headers = {'Authorization': f'Bearer {token}'}
     
+    # Obtenemos el ID del sitio
     res_site = requests.get(f"https://graph.microsoft.com/v1.0/sites?search={SITE_NAME_SEARCH}", headers=headers).json()
     site_id = res_site['value'][0]['id']
-
-    last_sync_str = '2026-01-01T00:00:00Z'
-    print("  -> FORZANDO sincronización desde 2026 para capturar Medidas Digitales...")
+    
+    last_sync_str = last_sync_utc
 
     # 2. Cargar catálogos (siempre necesarios para nombres)
     # Estos son pequeños, no pasa nada si se cargan completos
@@ -199,4 +204,14 @@ def run_incremental_sync():
     print(f"\n🏆 [FINALIZADO] Sincronización incremental exitosa. {datetime.now().strftime('%H:%M:%S')}")
 
 if __name__ == "__main__":
-    run_incremental_sync()
+    while True:
+        try:
+            # Sincronizamos cambios de las últimas 12 horas por seguridad cada vez que corre
+            run_incremental_sync(hours_back=12)
+            print(f"\n🏆 [FINALIZADO] Sincronización exitosa. Próxima ejecución en 1 hora.")
+        except Exception as e:
+            print(f"\n❌ [ERROR] Falló la sincronización: {e}")
+            print("  -> Reintentando en 1 hora...")
+        
+        # Esperar 1 hora
+        time.sleep(3600)
