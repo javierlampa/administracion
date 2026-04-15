@@ -7,7 +7,7 @@ load_dotenv()
 db_url = os.getenv('SUPABASE_DB_URL')
 
 try:
-    with open('20_KPI_EVOLUCION_PROGRAMA_RPC.sql', 'r', encoding='utf-8') as f:
+    with open('database/sql/20_KPI_EVOLUCION_PROGRAMA_RPC.sql', 'r', encoding='utf-8') as f:
         sql = f.read()
     
     conn = psycopg2.connect(db_url)

@@ -24,7 +24,7 @@ try:
     )
     cur = conn.cursor()
     
-    with open("16_DAILY_GRID_RPC.sql", "r", encoding="utf-8") as f:
+    with open("database/sql/16_DAILY_GRID_RPC.sql", "r", encoding="utf-8") as f:
         sql = f.read()
         
     cur.execute(sql)
