@@ -189,17 +189,51 @@ def run_incremental_sync(hours_back=3):
         })
     ]
 
+    total_orphans = []
     for sp_list, pg_table, mapper in rel_config:
         print(f"  -> Sincronizando {pg_table}...", end="", flush=True)
         url = f"https://graph.microsoft.com/v1.0/sites/{site_id}/lists/{sp_list}/items?expand=fields&$top=999"
         items = get_items_incremental(url, headers, last_sync_str)
+        
+        data_to_upsert = []
         if items:
-            data = [mapper(i['fields']) for i in items if smart_find_op_id(i['fields'].get('OP_TP') or i['fields'].get('OP_UNN') or i['fields'].get('OP') or i['fields'].get('OPLookupId'), db_maps)]
-            for j in range(0, len(data), 100):
-                supabase.table(pg_table).upsert(data[j:j+100]).execute()
-            print(f" ✅ {len(data)} items.")
+            for i in items:
+                f = i['fields']
+                op_val = f.get('OP_TP') or f.get('OP_UNN') or f.get('OP') or f.get('OPLookupId')
+                op_id = smart_find_op_id(op_val, db_maps)
+                
+                if op_id:
+                    data_to_upsert.append(mapper(f))
+                else:
+                    total_orphans.append({
+                        'lista': sp_list,
+                        'sp_id': f.get('id'),
+                        'op_no_encontrada': str(op_val).strip()
+                    })
+
+            if data_to_upsert:
+                for j in range(0, len(data_to_upsert), 100):
+                    supabase.table(pg_table).upsert(data_to_upsert[j:j+100]).execute()
+                print(f" ✅ {len(data_to_upsert)} items.")
+            else:
+                print(" ✅ OK (Sin cambios o todo huérfano).")
         else:
             print(" ✅ OK (Sin cambios).")
+
+    # Generar reporte de huérfanos si existen
+    report_path = "DOCS/reporte_huerfanos.txt"
+    if total_orphans:
+        with open(report_path, "w", encoding="utf-8") as rf:
+            rf.write(f"REPORTE DE ITEMS HUÉRFANOS - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+            rf.write("="*60 + "\n")
+            rf.write("Estos items se saltearon porque no se encontró su OP en la base de datos:\n\n")
+            for o in total_orphans:
+                rf.write(f"Lista: {o['lista']} | SP_ID: {o['sp_id']} | OP buscada: {o['op_no_encontrada']}\n")
+        print(f"\n⚠️ Se encontraron {len(total_orphans)} huérfanos. Reporte generado en {report_path}")
+    else:
+        if os.path.exists(report_path):
+            os.remove(report_path) # Limpiar reporte si ya no hay huérfanos
+        print("\n✨ Limpio: No se encontraron huérfanos.")
 
     print(f"\n🏆 [FINALIZADO] Sincronización incremental exitosa. {datetime.now().strftime('%H:%M:%S')}")
 
