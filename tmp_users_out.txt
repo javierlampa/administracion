@@ -1,0 +1,4 @@
+Usuarios en perfiles:
+ID: 35419a23-4237-4bd9-ad09-c795bf4d75e4, username: admin, nombre: Administrador, apellido: Principal, role_id: f3e908c0-163c-4688-9f77-aa8cb222a7d2
+ID: f5271a93-b5e1-448c-b9ea-1fc0b5c1eb6f, username: caterinap, nombre: Caterina , apellido: Pasin, role_id: f3e908c0-163c-4688-9f77-aa8cb222a7d2
+

@@ -1,0 +1,36 @@
+# General
+.env
+*.log
+*.tmp
+tmp/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.env/
+
+# Next.js / Node
+node_modules/
+.next/
+out/
+build/
+dist/
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
+
+# Data
+*.xlsx
+*.pdf
+result_compare.txt
+auditoria_pago_20260407_1928.txt
+test_pdf_output.txt
+tmp_output.txt
+tmp_users_out.txt
+diff_output.txt

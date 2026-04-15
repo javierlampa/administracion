@@ -1,0 +1,69 @@
+Traceback (most recent call last):
+  File "F:\JAVIER PRIVADO\APP PHYTON\ADMINISTRACION\tmp\deep_audit.py", line 98, in audit_table
+    batch = supabase.table(table_name).select(select_cols).range(offset, offset + limit - 1).execute()
+  File "C:\Users\javie\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\postgrest\_sync\request_builder.py", line 53, in execute
+    raise APIError(dict(json_obj))
+postgrest.exceptions.APIError: {'message': 'column ordenes_publicidad.op_id does not exist', 'code': '42703', 'hint': None, 'details': None}
+
+Loading OP Mapping from 'ordenes_publicidad'...
+  Loaded 3830 OP mappings.
+
+==================================================
+AUDITING: ordenes_publicidad
+SOURCE:   Orden de Publicidad (4).csv
+==================================================
+Fetching data from Supabase table 'ordenes_publicidad'...
+Error auditing table ordenes_publicidad: {'message': 'column ordenes_publicidad.op_id does not exist', 'code': '42703', 'hint': None, 'details': None}
+
+==================================================
+AUDITING: pagos
+SOURCE:   Pagos.csv
+==================================================
+Fetching data from Supabase table 'pagos'...
+
+[SUMMARY FOR pagos]
+Rows:         CSV=6753     DB=2369     Diff=4384
+Unique OPs:   CSV=5955     DB=1251     Diff=4704
+Total Money:  CSV=1,427,141,844.08
+              DB = 634,622,345.24
+              Diff= 792,519,498.84
+[WARN] Found 962 DB records without any OP association!
+
+[ALERT] OPs in CSV but MISSING in DB (4854):
+  Sample: 0001-0002848, 0001-0002915, 001, 003, 0057-01, 0091, 01018, 01037, 01037-08, 01037-09, 01037-1, 01037-10, 01049, 01049/08, 01063...
+
+[INFO] OPs in DB but NOT in CSV (150):
+  Sample: 1054, 1066, 1211, 1212, 1219, 1254, 1269, 1271, 1273, 1277...
+
+==================================================
+AUDITING: tv
+SOURCE:   TV.csv
+==================================================
+Fetching data from Supabase table 'tv'...
+
+[SUMMARY FOR tv]
+Rows:         CSV=6904     DB=6711     Diff=193
+Unique OPs:   CSV=6178     DB=6006     Diff=172
+Total Money:  CSV=1,588,706,941.27
+              DB =1,533,244,000.25
+              Diff=  55,462,941.02
+
+[ALERT] OPs in CSV but MISSING in DB (172):
+  Sample: 01010, 01010-07, 01011, 01011-07, 01011-08, 01011-09, 01016, 01016-08, 01054, 01062, 0634, 0906, 100049, 100140, 100146...
+
+==================================================
+AUDITING: unidades_negocio
+SOURCE:   Unidad de Negocio.csv
+==================================================
+Fetching data from Supabase table 'unidades_negocio'...
+
+[SUMMARY FOR unidades_negocio]
+Rows:         CSV=7369     DB=7089     Diff=280
+Unique OPs:   CSV=7180     DB=3811     Diff=3369
+Total Money:  CSV=1,792,656,379.38
+              DB =1,721,433,490.10
+              Diff=  71,222,889.28
+[WARN] Found 3103 DB records without any OP association!
+
+[ALERT] OPs in CSV but MISSING in DB (3369):
+  Sample: 001, 003, 0091, 01010, 01011, 01011-07, 01011-08, 01011-09, 01012, 01013, 01014, 01015, 01016, 01016-08, 01017...

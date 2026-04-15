@@ -1,0 +1,90 @@
+
+==================================================
+AUDITING: ordenes_publicidad
+SOURCE:   Orden de Publicidad (4).csv
+==================================================
+Fetching data from Supabase table 'ordenes_publicidad'...
+  Fetched 1000 records from offset 0
+  Fetched 1000 records from offset 1000
+  Fetched 1000 records from offset 2000
+  Fetched 1000 records from offset 3000
+  Fetched 1000 records from offset 4000
+  Fetched 1000 records from offset 5000
+  Fetched 830 records from offset 6000
+  Final batch reached at offset 6000
+
+[SUMMARY FOR ordenes_publicidad]
+Rows:         CSV=6830     DB=6830     Diff=0
+Unique OPs:   CSV=6830     DB=6830     Diff=0
+Total Money:  CSV=1,677,800,357.09
+              DB =1,677,800,357.09
+              Diff=           0.00
+
+==================================================
+AUDITING: pagos
+SOURCE:   Pagos.csv
+==================================================
+Fetching data from Supabase table 'pagos'...
+  Fetched 1000 records from offset 0
+  Fetched 1000 records from offset 1000
+  Fetched 369 records from offset 2000
+  Final batch reached at offset 2000
+
+[SUMMARY FOR pagos]
+Rows:         CSV=6753     DB=2369     Diff=4384
+Unique OPs:   CSV=5955     DB=0        Diff=5955
+Total Money:  CSV=1,427,141,844.08
+              DB = 634,622,345.24
+              Diff= 792,519,498.84
+
+[ALERT] OPs in CSV but MISSING in DB (5955):
+  Sample: 0001-0002848, 0001-0002915, 001, 003, 0057-01, 0091, 01018, 01037, 01037-08, 01037-09, 01037-1, 01037-10, 01049, 01049/08, 01063...
+
+==================================================
+AUDITING: tv
+SOURCE:   TV.csv
+==================================================
+Fetching data from Supabase table 'tv'...
+  Fetched 1000 records from offset 0
+  Fetched 1000 records from offset 1000
+  Fetched 1000 records from offset 2000
+  Fetched 1000 records from offset 3000
+  Fetched 1000 records from offset 4000
+  Fetched 1000 records from offset 5000
+  Fetched 711 records from offset 6000
+  Final batch reached at offset 6000
+
+[SUMMARY FOR tv]
+Rows:         CSV=6904     DB=6711     Diff=193
+Unique OPs:   CSV=6178     DB=6006     Diff=172
+Total Money:  CSV=1,588,706,941.27
+              DB =1,533,244,000.25
+              Diff=  55,462,941.02
+
+[ALERT] OPs in CSV but MISSING in DB (172):
+  Sample: 01010, 01010-07, 01011, 01011-07, 01011-08, 01011-09, 01016, 01016-08, 01054, 01062, 0634, 0906, 100049, 100140, 100146...
+
+==================================================
+AUDITING: unidades_negocio
+SOURCE:   Unidad de Negocio.csv
+==================================================
+Fetching data from Supabase table 'unidades_negocio'...
+  Fetched 1000 records from offset 0
+  Fetched 1000 records from offset 1000
+  Fetched 1000 records from offset 2000
+  Fetched 1000 records from offset 3000
+  Fetched 1000 records from offset 4000
+  Fetched 1000 records from offset 5000
+  Fetched 1000 records from offset 6000
+  Fetched 89 records from offset 7000
+  Final batch reached at offset 7000
+
+[SUMMARY FOR unidades_negocio]
+Rows:         CSV=7369     DB=7089     Diff=280
+Unique OPs:   CSV=7180     DB=0        Diff=7180
+Total Money:  CSV=1,792,656,379.38
+              DB =1,721,433,490.10
+              Diff=  71,222,889.28
+
+[ALERT] OPs in CSV but MISSING in DB (7180):
+  Sample: 0001-0002848, 0001-0002915, 001, 003, 0057-01, 0091, 01010, 01011, 01011-07, 01011-08, 01011-09, 01012, 01013, 01014, 01015...
