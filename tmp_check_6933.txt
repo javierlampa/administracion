@@ -1,4 +1,0 @@
---- OPs con 6933 ---
-ID: 7206 | OP: 6933 | Importe Total: 456000.0
-
---- Bloques de TV donde op_ref es '6933' o op_ref like '6933%' ---
