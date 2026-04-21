@@ -26,7 +26,8 @@ BEGIN
             o.fecha_orden,
             EXTRACT(YEAR FROM o.fecha_orden) as anio,
             EXTRACT(MONTH FROM o.fecha_orden) as mes,
-            to_char(o.fecha_orden, 'TMMonth') as mes_nombre
+            to_char(o.fecha_orden, 'TMMonth') as mes_nombre,
+            o.id as op_id
         FROM tv t
         JOIN ordenes_publicidad o ON t.op_id = o.id
         WHERE o.fecha_orden BETWEEN v_start AND v_end
@@ -51,12 +52,9 @@ BEGIN
             SELECT fecha, un, total FROM diario ORDER BY fecha ASC
         ) d
     ),
-    matriz_importe AS (
-        SELECT 
-            un,
-            mes_nombre as mes,
-            mes as mes_num,
-            SUM(importe) as total
+            mes_num,
+            SUM(importe) as total,
+            COUNT(DISTINCT op_id) as cantidad
         FROM base_ops
         GROUP BY 1, 2, 3
         ORDER BY 3 ASC
@@ -66,7 +64,8 @@ BEGIN
             un,
             mes_nombre as mes,
             mes as mes_num,
-            SUM(segundos) as total
+            SUM(segundos) as total,
+            COUNT(DISTINCT op_id) as cantidad
         FROM base_ops
         GROUP BY 1, 2, 3
         ORDER BY 3 ASC
@@ -76,19 +75,21 @@ BEGIN
             tipo_pub as un,
             mes_nombre as mes,
             mes as mes_num,
-            SUM(importe) as total
+            SUM(importe) as total,
+            COUNT(DISTINCT op_id) as cantidad
         FROM base_ops
         GROUP BY 1, 2, 3
         ORDER BY 3 ASC
     ),
     base_digital AS (
         SELECT 
-            'Digital ' || o.empresa || ' - ' || COALESCE(op.medidas_digital, '(Sin medida)') as un,
+            'Digital ' || COALESCE(NULLIF(TRIM(t.programa_nombre), ''), o.empresa) || ' - ' || COALESCE(o.medidas_digital, '(Sin medida)') as un,
             EXTRACT(MONTH FROM o.fecha_orden) as mes_num,
             to_char(o.fecha_orden, 'TMMonth') as mes,
-            SUM(COALESCE(o.importe_total, 0)) as total
-        FROM ordenes_publicidad o
-        JOIN ordenes_publicidad op ON op.id = o.id -- Auto-join para asegurar que usamos la tabla base
+            SUM(COALESCE(t.importe_total, 0)) as total,
+            COUNT(DISTINCT o.op) as cantidad
+        FROM tv t
+        JOIN ordenes_publicidad o ON t.op_numero = o.op
         WHERE o.fecha_orden BETWEEN v_start AND v_end
           AND (o.es_canje = false OR p_excluir_canjes = false)
           AND (p_empresa = 'Todas' OR o.empresa = p_empresa)

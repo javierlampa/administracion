@@ -1,0 +1,85 @@
+======================================================================
+  AUDITORÍA ESPEJO SHAREPOINT ↔ SUPABASE
+  Generado: 2026-04-16 21:05:25
+======================================================================
+
+──────────────────────────────────────────────────────────────────────
+  TABLA: Orden de Publicidad
+  SharePoint (Orden de Publicidad): 6867 OPs únicas (6867 items totales)
+  Supabase (ordenes_publicidad): 6867 OPs únicas
+  En ambos: 6867 | Estado: ✅ ESPEJO PERFECTO
+
+──────────────────────────────────────────────────────────────────────
+  TABLA: Pagos
+  SharePoint (Pagos): 0 OPs únicas (6779 items totales)
+  Supabase (pagos): 6005 OPs únicas
+  En ambos: 0 | Estado: ⚠️  DISCREPANCIAS
+
+  ⚠️  Solo en Supabase / no en SP (6005 OPs):
+     - 0001-0002848
+     - 0001-0002915
+     - 001
+     - 003
+     - 0057-01
+     - 0091
+     - 01018
+     - 01037
+     - 01037-08
+     - 01037-09
+     - 01037-1
+     - 01037-10
+     - 01049
+     - 01049/08
+     - 01063
+     - 01071
+     - 01072
+     - 01073
+     - 01104
+     - 01107
+     - 01113
+     - 01116
+     - 01116-1
+     - 01142
+     - 03/2026
+     - 03/2026-02
+     - 06-06-12
+     - 08/2026
+     - 08/2026-02
+     - 084/2024
+     - 084/2024-
+     - 084/2024--
+     - 1
+     - 1000-6
+     - 100005/0
+     - 100049/0
+     - 100066/0
+     - 100080/0
+     - 100088/0
+     - 1001-6
+     - 100140/1
+     - 100146/3
+     - 1002-5
+     - 100205/1
+     - 100218/0
+     - 1003-5
+     - 100347-0
+     - 100347/0
+     - 100354/1
+     - 10038
+     ... y 5955 más
+
+──────────────────────────────────────────────────────────────────────
+  TABLA: TV
+  SharePoint (TV): 5947 OPs únicas (6639 items totales)
+  Supabase (tv): 5947 OPs únicas
+  En ambos: 5947 | Estado: ✅ ESPEJO PERFECTO
+
+──────────────────────────────────────────────────────────────────────
+  TABLA: Unidad de Negocio
+  SharePoint (Unidad de Negocio): 6832 OPs únicas (7009 items totales)
+  Supabase (unidades_negocio): 6832 OPs únicas
+  En ambos: 6832 | Estado: ✅ ESPEJO PERFECTO
+
+======================================================================
+  RESUMEN FINAL: ⚠️  6005 OPs con discrepancias
+======================================================================

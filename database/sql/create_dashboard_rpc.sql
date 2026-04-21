@@ -31,10 +31,20 @@ BEGIN
         SELECT 
             EXTRACT(YEAR FROM fecha_orden) as anio_num,
             EXTRACT(MONTH FROM fecha_orden) as mes_num,
+            empresa,
             SUM(importe_total) as venta_mes
         FROM v_todas_las_op_report
         WHERE fecha_orden >= v_start_date AND fecha_orden <= v_end_date
           AND (p_empresa = 'Todas' OR empresa = p_empresa)
+        GROUP BY 1, 2, 3
+    ),
+    monthly_pivoted AS (
+        SELECT 
+            anio_num, mes_num,
+            SUM(CASE WHEN empresa = 'ANDINA SA' THEN venta_mes ELSE 0 END) as venta_andina,
+            SUM(CASE WHEN empresa = 'CONTENIDOS SA' THEN venta_mes ELSE 0 END) as venta_contenidos,
+            SUM(venta_mes) as venta_total
+        FROM monthly_raw
         GROUP BY 1, 2
     ),
     monthly_formatted AS (
@@ -46,13 +56,17 @@ BEGIN
                 WHEN 7 THEN 'jul' WHEN 8 THEN 'ago' WHEN 9 THEN 'sep'
                 WHEN 10 THEN 'oct' WHEN 11 THEN 'nov' WHEN 12 THEN 'dic'
             END as mes_nombre,
-            venta_mes,
-            SUM(venta_mes) OVER (ORDER BY anio_num, mes_num) as acumulado
-        FROM monthly_raw
+            venta_andina,
+            venta_contenidos,
+            venta_total,
+            SUM(venta_total) OVER (ORDER BY anio_num, mes_num) as acumulado
+        FROM monthly_pivoted
     )
     SELECT jsonb_agg(jsonb_build_object(
         'mes', (mes_nombre || ' ' || anio_num),
-        'venta', ROUND(venta_mes, 2),
+        'andina', ROUND(venta_andina, 2),
+        'contenidos', ROUND(venta_contenidos, 2),
+        'venta', ROUND(venta_total, 2),
         'acumulado', ROUND(acumulado, 2)
     )) INTO v_monthly_summary FROM (SELECT * FROM monthly_formatted ORDER BY anio_num, mes_num) sub;
 

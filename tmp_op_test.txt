@@ -1,0 +1,7 @@
+
+Detalle Real de bloques de TV en la base de datos:
+OP     | Total de la OP  | Programa (TV)                  | Importe en TV   | Segs  | Valor Seg
+----------------------------------------------------------------------------------------------------
+6933   | $456,000.00     | NOTICIEROS, 2                  | $456,000.00     | 880.0 | $0.00
+6933   | $456,000.00     | NOTICIEROS, 2                  | $456,000.00     | 880.0 | $0.00
+6933   | $456,000.00     | NOTICIEROS, 2                  | $456,000.00     | 880.0 | $0.00

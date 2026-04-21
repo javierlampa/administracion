@@ -1,6 +1,31 @@
 # 06 — Bugs, Optimizaciones y Deuda Técnica
 
-> **Última actualización:** 14 de Abril 2026
+> **Última actualización:** 15 de Abril 2026
+
+---
+
+## ✅ RESUELTOS — Sesión 15/04/2026 (Sync Incremental Robusto)
+
+### `sharepoint_sync.py` se detenía ante el primer error de duplicado
+- **Síntoma:** Error `23505 duplicate key value violates unique constraint "ordenes_publicidad_op_key"` detenía todo el proceso
+- **Causa:** El upsert se hacía en lote; un solo conflicto de clave rompía el batch entero
+- **Solución:** Upsert individual por registro con `try/except` granular. Los errores se anotan y el proceso continúa
+
+### `sharepoint_sync.py` no distinguía entre ID interno y número de OP real
+- **Síntoma:** La OP `7291` con `op_id` diferente tiraba error `unique_op_un` en `unidades_negocio`
+- **Causa:** La validación de duplicados usaba el ID interno del sistema en lugar del número de OP real
+- **Solución:** La validación ahora usa el campo `op_numero` (el número real de la OP) como criterio de unicidad
+
+### Reportes de error no daban información suficiente
+- **Síntoma:** `reporte_huerfanos.txt` era un solo archivo con formato inconsistente
+- **Solución:** Reemplazado por dos archivos separados:
+  - `sincronizacion_exitosa.txt` — OPs actualizadas, agrupadas por tabla
+  - `sincronizacion_errores.txt` — Errores con Lista, OP (número real), SP_ID y motivo exacto
+
+### Contadores en consola mostraban números negativos
+- **Síntoma:** `-3 salteados/error` en la salida de consola
+- **Causa:** `count_success` no se inicializaba antes del loop de tablas relacionadas
+- **Solución:** `count_success = 0` inicializado correctamente al comienzo de cada iteración de tabla
 
 ---
 
@@ -109,9 +134,18 @@
 - `ReportTable.tsx` ordena localmente → con >10.000 registros puede congelar el browser
 - **Solución futura:** Pasar orden como parámetro a `.order()` de Supabase
 
-### SharePoint Sync con `try/except: pass`
-- Errores silenciosos si el token Microsoft vence
-- **Solución futura:** Agregar logging o notificación
+### SharePoint Sync — Token Microsoft puede vencer a mitad del proceso
+- Si el token expira a mitad de la sincronización, las requests a Graph API fallan silenciosamente
+- **Solución futura:** Renovar el token al inicio de cada tabla, o implementar retry con re-autenticación
+
+### Catálogos descargados completos en cada ciclo
+- Programas, Vendedores y Clientes se bajan completos en cada ciclo de 1 hora aunque no hayan cambiado
+- **Solución futura:** Cachear en archivo local o memoria con TTL de 6-12 horas
+
+### Bot WhatsApp — `MAESTRO_NOMBRES` se pierde al reiniciar
+- El caché de nombres está en memoria → si el proceso se reinicia, la primera búsqueda fuzzy siempre va a la DB
+- **Impacto:** Bajo (solo el primer request es más lento)
+- **Solución futura:** Persistir en archivo JSON o en `bot_sesiones` de Supabase
 
 ---
 

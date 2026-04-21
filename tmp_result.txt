@@ -1,0 +1,14 @@
+Obteniendo datos de OPs de 2026...
+Total OPs en rango: 494
+Suma total de OPs: 237,564,894.16
+
+Obteniendo datos de la tabla TV (o equivalente)...
+
+Resumen Analítico:
+Total OPs que tienen bloques de TV: 0
+Suma de bloques de TV para esas OPs: 0.00
+Diferencia Global (TV - OPs): -237,564,894.16
+
+¡Excelente! Ninguna OP tiene bloques de TV cuya suma supere el total de la OP.
+
+Suma de TV huérfano o fuera del rango de fechas buscado: 53,441,141.07

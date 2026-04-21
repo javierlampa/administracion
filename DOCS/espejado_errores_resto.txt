@@ -1,0 +1,10 @@
+REPORTE DE ERRORES/EXCLUIDOS - ESPEJADO TOTAL
+=================================================================
+Lista : UNIDADES_NEGOCIO | OP: 1043 | SP_ID: 1150 | ERROR: DUPLICADO EN SHAREPOINT (Ya existe este renglón)
+Lista : UNIDADES_NEGOCIO | OP: 4146 | SP_ID: 1343 | ERROR: DUPLICADO EN SHAREPOINT (Ya existe este renglón)
+Lista : UNIDADES_NEGOCIO | OP: 5011 | SP_ID: 1348 | ERROR: DUPLICADO EN SHAREPOINT (Ya existe este renglón)
+Lista : UNIDADES_NEGOCIO | OP: 36377 | SP_ID: 1754 | ERROR: DUPLICADO EN SHAREPOINT (Ya existe este renglón)
+Lista : UNIDADES_NEGOCIO | OP: 36377 | SP_ID: 1755 | ERROR: DUPLICADO EN SHAREPOINT (Ya existe este renglón)
+Lista : UNIDADES_NEGOCIO | OP: 5484 | SP_ID: 2199 | ERROR: DUPLICADO EN SHAREPOINT (Ya existe este renglón)
+Lista : UNIDADES_NEGOCIO | OP: 90068/1 | SP_ID: 4854 | ERROR: DUPLICADO EN SHAREPOINT (Ya existe este renglón)
+Lista : UNIDADES_NEGOCIO | OP: 6123-11 | SP_ID: 5020 | ERROR: DUPLICADO EN SHAREPOINT (Ya existe este renglón)

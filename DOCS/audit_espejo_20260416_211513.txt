@@ -1,0 +1,33 @@
+======================================================================
+  AUDITORÍA ESPEJO SHAREPOINT ↔ SUPABASE
+  Generado: 2026-04-16 21:14:00
+======================================================================
+
+──────────────────────────────────────────────────────────────────────
+  TABLA: Orden de Publicidad
+  SharePoint: 6867 OPs únicas (6867 items totales en SP)
+  Supabase: 6867 OPs únicas
+  En ambos: 6867 | Estado: ✅ ESPEJO PERFECTO
+
+──────────────────────────────────────────────────────────────────────
+  TABLA: Pagos
+  SP item IDs únicos: 6779 (6779 items totales en SP)
+  Supabase sp_ids únicos: 6779
+  En ambos: 6779 | Estado: ✅ ESPEJO PERFECTO
+  ℹ️  Comparación por sp_id (Pagos usa campo Lookup, no texto)
+
+──────────────────────────────────────────────────────────────────────
+  TABLA: TV
+  SharePoint: 5947 OPs únicas (6639 items totales en SP)
+  Supabase: 5947 OPs únicas
+  En ambos: 5947 | Estado: ✅ ESPEJO PERFECTO
+
+──────────────────────────────────────────────────────────────────────
+  TABLA: Unidad de Negocio
+  SharePoint: 6832 OPs únicas (7009 items totales en SP)
+  Supabase: 6832 OPs únicas
+  En ambos: 6832 | Estado: ✅ ESPEJO PERFECTO
+
+======================================================================
+  RESUMEN FINAL: ✅ SIN DISCREPANCIAS
+======================================================================

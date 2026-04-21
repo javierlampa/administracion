@@ -1,6 +1,38 @@
-**Última actualización:** 13 de Abril 2026 · Sistema: Telesol
+**Última actualización:** 15 de Abril 2026 · Sistema: Telesol
 
 ---
+
+## 9. SESIÓN 15/04/2026 — SYNC INCREMENTAL ROBUSTO + REPORTES DUALES
+
+### Objetivo
+Estabilizar `sharepoint_sync.py` para que corra 24/7 sin intervención manual, saltee errores individuales (duplicados, huérfanos) sin detener el proceso, y genere reportes claros de qué se actualizó y qué falló.
+
+### Cambios en `sharepoint_sync.py`
+
+#### Sincronización Incremental
+- Ventana de 12 horas hacia atrás en cada ciclo (evita reprocesar todo)
+- Bucle infinito `while True` con `time.sleep(3600)` — corre cada 1 hora
+- Token Microsoft renovado al inicio de cada ciclo completo
+
+#### Manejo de Duplicados y Errores
+- **OPs duplicadas:** Antes de subir, verifica si el número de OP ya existe en DB → la saltea sin error
+- **Upsert granular:** Cada registro (OP, TV, UN, Pago) se inserta individualmente con `try/except`
+- **Criterio de unicidad:** El número de OP real (`op_numero`), no el ID interno
+
+#### Sistema de Reportes Duales
+- `DOCS/sincronizacion_exitosa.txt` → OPs actualizadas correctamente, agrupadas por tabla
+- `DOCS/sincronizacion_errores.txt` → Errores con Lista | OP | SP_ID | Motivo
+- `DOCS/reporte_huerfanos.txt` → Eliminado (reemplazado por los dos archivos de arriba)
+
+### Reorganización del Proyecto
+- Scripts de prueba/diagnóstico → `archive/scripts/`
+- Archivos de datos → `archive/data/`
+- Migraciones SQL → `database/sql/`
+- `apply_sql.py` y `apply_sql_monitoring.py` → rutas actualizadas
+- Git inicializado con `.gitignore` correcto (`.env` excluido)
+
+---
+
 
 ## 8. SESIÓN 13/04/2026 — BOT WHATSAPP V3 (NAVEGACIÓN POR ESTADOS)
 
